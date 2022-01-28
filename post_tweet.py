@@ -31,7 +31,7 @@ def make_tweepy_client():
     return client
 
 
-def main(event, context):
+def hello_pubsub(event, context):
     """event, context are automatically passed from the pub/sub trigger.
     TODO: move tweet to the publish of the pub/sub chron??"""
   
@@ -44,11 +44,5 @@ def main(event, context):
     post_info = []
     for tweet in todays_tweets:
         resp = client.create_tweet(text=tweet)
-        post_info.append([resp, tweet])
-    return post_info
-
-
-
-if __name__ == '__main__':
-    print(main())
-
+        post_info.append(resp)
+    print(post_info)
