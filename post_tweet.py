@@ -31,7 +31,10 @@ def make_tweepy_client():
     return client
 
 
-def main():
+def main(event, context):
+    """event, context are automatically passed from the pub/sub trigger.
+    TODO: move tweet to the publish of the pub/sub chron??"""
+  
     sss = """20220128    TEST
 20220128    TEST2
 20220129    TEST3"""
