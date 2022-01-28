@@ -1,5 +1,24 @@
 import tweepy
 import os
+from datetime import datetime, timezone
+from collections import defaultdict
+
+ 
+def spacesepstr2dateobjdefdict(sss):
+    dsd = defaultdict(list)
+    for line in sss.split('\n'):
+        d_s, text = line.strip().split('    ')
+        date_obj = datetime.strptime(d_s, "%Y%m%d").date()
+        dsd[date_obj].append(text)
+
+    return dsd
+
+
+def spacesepstr2todaystext_l(sss):
+    date_obj = datetime.now(timezone.utc).date()
+    dsd = spacesepstr2dateobjdefdict(sss)
+    return dsd[date_obj]
+
 
 def make_tweepy_client():
     ckey = os.environ.get('CONSUMER_KEY')
@@ -12,7 +31,21 @@ def make_tweepy_client():
     return client
 
 
-if __name__ == '__main__':
+def main():
+    sss = """20220128    TEST
+20220128    TEST2
+20220129    TEST3"""
+
+    todays_tweets = spacesepstr2todaystext_l(sss)
     client = make_tweepy_client()
-    resp = client.create_tweet(text="TEST tweepy")
-    print(resp.data)
+    post_info = []
+    for tweet in todays_tweets:
+        resp = client.create_tweet(text=tweet)
+        post_info.append([resp, tweet])
+    return post_info
+
+
+
+if __name__ == '__main__':
+    print(main())
+
