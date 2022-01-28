@@ -36,8 +36,8 @@ def main(event, context):
     TODO: move tweet to the publish of the pub/sub chron??"""
   
     sss = """20220128    TEST
-20220128    TEST2
-20220129    TEST3"""
+20220129    TEST2
+20220130    TEST3"""
 
     todays_tweets = spacesepstr2todaystext_l(sss)
     client = make_tweepy_client()
